@@ -75,7 +75,7 @@ export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
             ))}
           </Pie>
           <Tooltip 
-            formatter={(value: number) => [`${value}%`, 'Allocation']}
+            formatter={(value: any) => [`${value}%`, 'Allocation']}
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', borderRadius: '0.75rem' }}
             itemStyle={{ color: '#fcd34d' }}
           />

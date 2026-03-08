@@ -34,7 +34,7 @@ export default function Home() {
       // Zavolání naší backendové funkce (Server Action)
       const result = await analyzeStock(ticker);
       
-      if (result.success) {
+      if (result.success && result.data) {
         // Nastavíme taky výchozí dynamickou změnu trhu na dnešek (nebo 1y výchozí),
         // ideálně rovnou z prvního a posledního bodu grafu
         let initialChange = result.data.changePercent;
