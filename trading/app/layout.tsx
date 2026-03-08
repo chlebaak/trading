@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Arvo } from 'next/font/google';
 import './globals.css';
+import Navigation from '@/components/Navigation';
 
 // Nasazení fontu Arvo
 const arvo = Arvo({ 
@@ -11,8 +12,8 @@ const arvo = Arvo({
 
 // Meta tagy pro SEO a zobrazení v záložce prohlížeče
 export const metadata: Metadata = {
-  title: 'AI Akciový Analytik | Gemini Flash',
-  description: 'Zadej ticker a získej okamžitou finanční analýzu, graf trendu a predikci pomocí Google Gemini AI.',
+  title: 'AI Stock Analyst | Gemini Flash',
+  description: 'Enter a ticker or build a portfolio to get an instant financial analysis and prediction using Google Gemini AI.',
 };
 
 export default function RootLayout({
@@ -21,19 +22,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="cs">
-      <body className={`${arvo.className} bg-slate-950 text-slate-50 antialiased min-h-screen flex flex-col selection:bg-amber-500/30`}>
+    <html lang="en">
+      <body className={`${arvo.className} bg-slate-950 text-slate-50 antialiased min-h-screen flex flex-col selection:bg-amber-500/30 overflow-x-hidden`}>
         
-        {/* Zde se vykreslí naše app/page.tsx */}
-        <div className="flex-grow">
+        {/* Zde se vykreslí naše app/page.tsx nebo app/portfolio/page.tsx */}
+        <div className="flex-grow pt-6 p-2 md:pt-10 z-10 relative">
+          <Navigation />
           {children}
         </div>
 
         {/* Globální patička, která bude na každé stránce webu dole */}
         <footer className="py-8 text-center text-sm text-slate-500 border-t border-slate-900 mt-auto">
           <p>
-            Vytvořeno s Next.js, Yahoo Finance API a Google Gemini AI. <br/>
-            Data mohou být zpožděná. Neslouží jako investiční doporučení.
+            Built with Next.js, Yahoo Finance API and Google Gemini AI. <br/>
+            Data might be delayed. This does not constitute financial advice.
           </p>
         </footer>
 

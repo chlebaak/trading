@@ -96,9 +96,9 @@ export default function Home() {
   const RANGES = ['1d', '1w', '1m', '1y', 'YTD', 'max'];
 
   return (
-    <main className="min-h-screen p-6 md:p-12 relative overflow-hidden">
-      {/* Decentní záře na pozadí */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+    <main className="min-h-screen p-6 md:p-12 relative">
+      {/* Decentní záře na pozadí, která nyní plynule navazuje i pod navigaci */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
       <div className="max-w-6xl mx-auto space-y-10 relative z-10">
         
@@ -203,7 +203,7 @@ export default function Home() {
                 </div>
                 <div className="bg-slate-800/20 p-4 rounded-2xl border border-slate-700/30 backdrop-blur-sm">
                   <p className="text-xs text-slate-500 mb-1 font-medium uppercase tracking-wider">Div. Yield</p>
-                  <p className="text-lg font-bold text-slate-200">{stockData.dividendYield ? (stockData.dividendYield * 100).toFixed(2) + '%' : '-'}</p>
+                  <p className="text-lg font-bold text-slate-200">{stockData.dividendYield ? stockData.dividendYield.toFixed(2) + '%' : '-'}</p>
                 </div>
               </div>
             </div>

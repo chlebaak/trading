@@ -27,11 +27,19 @@ export default function AiAnalysis({ content }: AiAnalysisProps) {
             const text = String(children).toUpperCase();
             let badgeColor = "bg-slate-700/50 text-slate-300 border-slate-600"; // default
             
+            // Akciový rating
             if (text.includes("STRONG BUY")) badgeColor = "bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
             else if (text.includes("BUY")) badgeColor = "bg-emerald-500/10 text-emerald-300 border-emerald-500/30";
             else if (text.includes("HOLD")) badgeColor = "bg-amber-500/20 text-amber-400 border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.1)]";
             else if (text.includes("STRONG SELL")) badgeColor = "bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_15px_rgba(244,63,94,0.2)]";
             else if (text.includes("SELL")) badgeColor = "bg-rose-500/10 text-rose-300 border-rose-500/30";
+
+            // Portfolio rating
+            if (text.includes("GREAT")) badgeColor = "bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
+            else if (text.includes("GOOD")) badgeColor = "bg-emerald-500/10 text-emerald-300 border-emerald-500/30";
+            else if (text.includes("FAIR")) badgeColor = "bg-amber-500/20 text-amber-400 border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.1)]";
+            else if (text.includes("RISKY")) badgeColor = "bg-orange-500/20 text-orange-400 border-orange-500/50 shadow-[0_0_15px_rgba(249,115,22,0.2)]";
+            else if (text.includes("DANGEROUS")) badgeColor = "bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_15px_rgba(244,63,94,0.2)]";
 
             return (
               <span className={`inline-block px-4 py-2 my-2 rounded-xl border text-xl font-black tracking-widest ${badgeColor}`} {...props}>
