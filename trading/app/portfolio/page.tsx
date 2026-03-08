@@ -1,17 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { analyzePortfolio, PortfolioHolding } from '../actions/portfolioActions';
+import { analyzePortfolio } from '../actions/portfolioActions';
 import PortfolioPieChart from '@/components/PortfolioPieChart';
 import AiAnalysis from '@/components/AiAnalysis';
+import { useTrading } from '@/components/TradingProvider';
 
 export default function PortfolioPage() {
+  const {
+    portfolioHoldings: holdings,
+    setPortfolioHoldings: setHoldings,
+    portfolioResult: analysisResult,
+    setPortfolioResult: setAnalysisResult
+  } = useTrading();
+
   const [tickerInput, setTickerInput] = useState('');
   const [percentInput, setPercentInput] = useState('');
-  const [holdings, setHoldings] = useState<PortfolioHolding[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
 
   const calculateTotalPercent = () => holdings.reduce((sum, h) => sum + h.percent, 0);
   const totalPercent = calculateTotalPercent();

@@ -1,16 +1,24 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 
 // Definice toho, co komponenta očekává z hlavní stránky (props)
 interface SearchBarProps {
   onSearch: (ticker: string) => void;
   isLoading: boolean;
+  initialValue?: string;
 }
 
-export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
+export default function SearchBar({ onSearch, isLoading, initialValue = '' }: SearchBarProps) {
   // Lokální stav pro to, co uživatel zrovna píše do políčka
-  const [ticker, setTicker] = useState('');
+  const [ticker, setTicker] = useState(initialValue);
+
+  // Pokud se změní initialValue (např ze sdíleného stavu), aktualizujeme
+  useEffect(() => {
+    if (initialValue) {
+      setTicker(initialValue);
+    }
+  }, [initialValue]);
 
   // Funkce, která se spustí při odeslání formuláře
   const handleSubmit = (e: FormEvent) => {

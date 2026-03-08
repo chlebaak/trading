@@ -7,6 +7,7 @@ import { analyzeStock, getChartData } from './actions/stockActions';
 import SearchBar from '@/components/SearchBar';
 import StockChart from '@/components/StockChart';
 import AiAnalysis from '@/components/AiAnalysis';
+import { useTrading } from '@/components/TradingProvider';
 
 const FORMATTERS = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -14,12 +15,20 @@ const FORMATTERS = new Intl.NumberFormat('en-US', {
 });
 
 export default function Home() {
-  // Stavy aplikace
+  // Sdílené stavy přes Context
+  const { 
+    singleStockData: stockData, 
+    setSingleStockData: setStockData,
+    singleActiveRange: activeRange,
+    setSingleActiveRange: setActiveRange,
+    singleLastTicker: lastTicker,
+    setSingleLastTicker: setLastTicker
+  } = useTrading();
+
+  // Lokální stavy pro UI (loading atd. není nutné sdílet)
   const [loading, setLoading] = useState(false);
   const [chartLoading, setChartLoading] = useState(false);
   const [error, setError] = useState('');
-  const [stockData, setStockData] = useState<any>(null);
-  const [activeRange, setActiveRange] = useState('1y');
 
   // Funkce, která se spustí po odeslání tickeru ve vyhledávači
   const handleSearch = async (ticker: string) => {
@@ -29,6 +38,7 @@ export default function Home() {
     setError('');
     setStockData(null);
     setActiveRange('1y');
+    setLastTicker(ticker); // Uložíme hledaný ticker do sdíleného stavu
 
     try {
       // Zavolání naší backendové funkce (Server Action)
@@ -114,7 +124,7 @@ export default function Home() {
 
         {/* Komponenta pro vyhledání */}
         <div className="flex justify-center">
-          <SearchBar onSearch={handleSearch} isLoading={loading} />
+          <SearchBar onSearch={handleSearch} isLoading={loading} initialValue={lastTicker} />
         </div>
 
         {/* Zobrazení chyby */}
