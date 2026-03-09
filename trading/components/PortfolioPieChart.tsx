@@ -23,7 +23,7 @@ const COLORS = [
 export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="h-[300px] w-full flex items-center justify-center text-slate-500 border border-dashed border-slate-700/50 rounded-3xl bg-slate-800/10">
+      <div className="h-[250px] sm:h-[300px] w-full flex items-center justify-center text-slate-500 border border-dashed border-slate-700/50 rounded-3xl bg-slate-800/10">
         Empty Portfolio
       </div>
     );
@@ -53,7 +53,7 @@ export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
   };
 
   return (
-    <div className="h-[300px] w-full mt-4 drop-shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+    <div className="w-full flex items-center justify-center mt-4 drop-shadow-[0_0_15px_rgba(245,158,11,0.05)] h-[250px] sm:h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -62,8 +62,8 @@ export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
             cy="50%"
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={120}
-            innerRadius={80} // Zúžený donut pro modernější look
+            outerRadius="80%"
+            innerRadius="60%" // Zúžený donut pro modernější look vhodný i pro mobily
             paddingAngle={4} // Průhledné mezery mezi bloky
             cornerRadius={6} // Zakulacené rohy jednotlivých dílků
             fill="#8884d8"
