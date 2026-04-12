@@ -5,6 +5,7 @@ import { analyzePortfolio } from '../actions/portfolioActions';
 import PortfolioPieChart from '@/components/PortfolioPieChart';
 import AiAnalysis from '@/components/AiAnalysis';
 import { useTrading } from '@/components/TradingProvider';
+import { PortfolioHoldingData } from '@/types';
 
 export default function PortfolioPage() {
   const {
@@ -67,6 +68,19 @@ export default function PortfolioPage() {
     setAnalysisResult(null);
   };
 
+  const handleAutoBalance = () => {
+    if (holdings.length === 0) return;
+    const newHoldings = holdings.map((h, i) => {
+       let share = parseFloat((100 / holdings.length).toFixed(1));
+       if (i === holdings.length - 1) {
+           share = parseFloat((100 - (share * (holdings.length - 1))).toFixed(1));
+       }
+       return { ...h, percent: share };
+    });
+    setHoldings(newHoldings);
+    setAnalysisResult(null);
+  };
+
   const handleAnalyze = async () => {
     if (totalPercent !== 100) {
       setError(`Portfolio must be exactly 100% to analyze. Currently at ${totalPercent}%.`);
@@ -91,9 +105,7 @@ export default function PortfolioPage() {
   };
 
   return (
-    <main className="min-h-screen p-4 sm:p-6 md:p-12 relative overflow-x-hidden">
-      <div className="absolute top-0 right-1/4 -translate-y-1/2 w-[400px] sm:w-[800px] h-[400px] bg-amber-600/10 blur-[80px] sm:blur-[120px] rounded-full pointer-events-none z-0"></div>
-
+    <main className="min-h-screen p-4 sm:p-6 md:p-12 relative">
       <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10 relative z-10">
         
         <header className="text-center space-y-3 sm:space-y-4">
@@ -150,9 +162,23 @@ export default function PortfolioPage() {
             </form>
 
             <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center bg-slate-800/30 p-3 sm:p-4 rounded-xl border border-slate-700/50 mb-4 gap-2">
-               <span className="text-sm text-slate-400 font-medium whitespace-nowrap">Total Allocation</span>
+               <div className="flex items-center gap-3">
+                 <span className="text-sm text-slate-400 font-medium whitespace-nowrap">Total Allocation</span>
+                 {holdings.length > 0 && totalPercent !== 100 && (
+                   <button
+                     onClick={handleAutoBalance}
+                     type="button"
+                     className="text-xs bg-slate-700/50 hover:bg-slate-600 text-slate-300 hover:text-amber-400 px-2.5 py-1.5 rounded-md transition-colors border border-slate-600/50 hover:border-amber-500/50 flex items-center gap-1.5"
+                   >
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                     </svg>
+                     Auto
+                   </button>
+                 )}
+               </div>
                <span className={`text-xl font-bold transition-colors ${totalPercent === 100 ? 'text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]' : 'text-slate-300'}`}>
-                 {totalPercent}% / 100%
+                 {totalPercent.toFixed(1).replace(/\.0$/, '')}% / 100%
                </span>
             </div>
 
@@ -216,7 +242,7 @@ export default function PortfolioPage() {
                 
                 {/* Stats row for each fetched asset from API */}
                 <div className="flex gap-3 overflow-x-auto pb-4 mb-6 custom-scrollbar">
-                  {analysisResult.holdingsData.map((asset: any) => (
+                  {analysisResult.holdingsData.map((asset: PortfolioHoldingData) => (
                     <div key={asset.ticker} className="bg-slate-800/20 border border-slate-700/30 p-4 rounded-2xl min-w-[140px] flex-shrink-0 backdrop-blur-sm">
                       <div className="text-xs text-slate-500 mb-1 font-medium uppercase tracking-wider">{asset.ticker} • <span className="text-slate-300">{asset.percent}%</span></div>
                       <div className="font-bold text-slate-200 text-lg">{asset.price}</div>

@@ -1,13 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { analyzeStock, getChartData } from './actions/stockActions'; 
+import { analyzeStock, getChartData } from './actions/stockActions';
+import { StockData } from '@/types';
 
 // Importujeme UI komponenty
 import SearchBar from '@/components/SearchBar';
 import StockChart from '@/components/StockChart';
 import AiAnalysis from '@/components/AiAnalysis';
 import { useTrading } from '@/components/TradingProvider';
+
+const QUICK_PICKS = ['NVDA', 'AAPL', 'MSFT', 'TSLA', 'BTC-USD'];
 
 const FORMATTERS = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -90,11 +93,11 @@ export default function Home() {
           }
         }
 
-        setStockData((prev: any) => ({
+        setStockData((prev: StockData | null) => prev ? ({
           ...prev,
           chartData: result.data,
           dynamicChangePercent: newChangePercent
-        }));
+        }) : null);
       }
     } catch (err) {
       console.error('Failed to update the chart');
@@ -107,9 +110,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen p-6 md:p-12 relative">
-      {/* Decentní záře na pozadí, která nyní plynule navazuje i pod navigaci */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-600/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-
       <div className="max-w-6xl mx-auto space-y-10 relative z-10">
         
         {/* Hlavička */}
@@ -123,8 +123,23 @@ export default function Home() {
         </header>
 
         {/* Komponenta pro vyhledání */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-4">
           <SearchBar onSearch={handleSearch} isLoading={loading} initialValue={lastTicker} />
+          
+          {/* Quick Picks */}
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
+            <span className="text-xs text-slate-500 font-medium uppercase tracking-wider flex items-center mr-2">Quick Picks:</span>
+            {QUICK_PICKS.map((ticker) => (
+              <button
+                key={ticker}
+                onClick={() => handleSearch(ticker)}
+                disabled={loading}
+                className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-800/50 text-slate-300 hover:bg-slate-700 hover:text-amber-400 border border-slate-700/50 hover:border-amber-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {ticker}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Zobrazení chyby */}

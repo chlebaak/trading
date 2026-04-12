@@ -13,7 +13,7 @@ export default function Navigation() {
           href="/" 
           className={`px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
             pathname === '/' 
-              ? 'bg-slate-800/80 text-amber-400 shadow-md border border-amber-500/20' 
+              ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.1)] border border-amber-500/30' 
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
           }`}
         >
@@ -22,8 +22,8 @@ export default function Navigation() {
         <Link 
           href="/portfolio" 
           className={`px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${
-            pathname === '/portfolio' 
-              ? 'bg-slate-800/80 text-amber-400 shadow-md border border-amber-500/20' 
+            pathname?.startsWith('/portfolio') 
+              ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.1)] border border-amber-500/30' 
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
           }`}
         >

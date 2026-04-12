@@ -50,10 +50,10 @@ export async function getChartData(ticker: string, range: string) {
     return {
       success: true,
       data: chart.quotes
-        .filter((q: any) => q.close !== null)
-        .map((q: any) => ({
+        .filter((q: { close: number | null; date: Date }) => q.close !== null)
+        .map((q: { close: number | null; date: Date }) => ({
           date: q.date.toISOString(),
-          close: q.close,
+          close: q.close as number,
         }))
     };
   } catch (error) {

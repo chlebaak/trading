@@ -122,8 +122,8 @@ export default function StockChart({ data }: StockChartProps) {
             }}
             itemStyle={{ color: '#fbbf24', fontWeight: 'bold' }}
             labelStyle={{ color: '#94a3b8', marginBottom: '4px' }}
-            labelFormatter={(label: any) => formatTooltipDate(label as string | Date)}
-            formatter={(value: any) => [formatPrice(value as number), 'Cena']}
+            labelFormatter={(label: string | Date | number) => formatTooltipDate(label as string | Date)}
+            formatter={(value: number) => [formatPrice(value), 'Cena']}
           />
 
           {/* Samotná křivka a plocha grafu */}
