@@ -62,7 +62,7 @@ export default function Home() {
         setStockData({
           ...result.data,
           dynamicChangePercent: initialChange
-        }); 
+        } as StockData); 
       } else {
         setError(result.error || 'Something went wrong while fetchig data.');
       }
@@ -97,7 +97,7 @@ export default function Home() {
           ...prev,
           chartData: result.data,
           dynamicChangePercent: newChangePercent
-        }) : null);
+        } as StockData) : null);
       }
     } catch (err) {
       console.error('Failed to update the chart');
