@@ -30,9 +30,7 @@ export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
   }
 
   // Custom Label uvnitř grafu - barva slate-900 pro lepší kontrast v jasných amber barvách
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: {
-    cx: number; cy: number; midAngle: number; innerRadius: number; outerRadius: number; percent: number; index: number;
-  }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
     const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
@@ -77,7 +75,7 @@ export default function PortfolioPieChart({ data }: PortfolioPieChartProps) {
             ))}
           </Pie>
           <Tooltip 
-            formatter={(value: number) => [`${value}%`, 'Allocation']}
+            formatter={(value: any) => [`${value}%`, 'Allocation']}
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', borderRadius: '0.75rem' }}
             itemStyle={{ color: '#fcd34d' }}
           />

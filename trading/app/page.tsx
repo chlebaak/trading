@@ -48,9 +48,8 @@ export default function Home() {
       const result = await analyzeStock(ticker);
       
       if (result.success && result.data) {
-        // Nastavíme taky výchozí dynamickou změnu trhu na dnešek (nebo 1y výchozí),
-        // ideálně rovnou z prvního a posledního bodu grafu
-        let initialChange = result.data.changePercent;
+        // Nastavíme taky výchozí dynamickou změnu trhu na dnešek (nebo 1y výchozí)
+        let initialChange: number = parseFloat(result.data.changePercent);
         if (result.data.chartData && result.data.chartData.length > 0) {
           const firstPrice = result.data.chartData[0].close;
           const lastPrice = result.data.chartData[result.data.chartData.length - 1].close;
@@ -83,7 +82,7 @@ export default function Home() {
       const result = await getChartData(stockData.ticker, range);
       if (result.success) {
         // Spočítáme novou procentuální změnu podle vybraného horizontu grafu
-        let newChangePercent = stockData.changePercent;
+        let newChangePercent: number = parseFloat(stockData.changePercent);
         
         if (result.data && result.data.length > 0) {
           const firstPrice = result.data[0].close;

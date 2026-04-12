@@ -5,7 +5,7 @@ import { analyzePortfolio } from '../actions/portfolioActions';
 import PortfolioPieChart from '@/components/PortfolioPieChart';
 import AiAnalysis from '@/components/AiAnalysis';
 import { useTrading } from '@/components/TradingProvider';
-import { PortfolioHoldingData } from '@/types';
+import { PortfolioHoldingData, PortfolioAnalysisResult } from '@/types';
 
 export default function PortfolioPage() {
   const {
@@ -93,7 +93,7 @@ export default function PortfolioPage() {
     try {
       const result = await analyzePortfolio(holdings);
       if (result.success) {
-        setAnalysisResult(result.data);
+        setAnalysisResult(result.data as PortfolioAnalysisResult);
       } else {
         setError(result.error || 'Something went wrong during analysis.');
       }
